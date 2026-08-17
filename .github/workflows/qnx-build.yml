@@ -157,3 +157,11 @@ jobs:
           bazel test --config ${{ inputs.bazel-config }} \
             --credential_helper=*.qnx.com="${QNX_CREDENTIAL_HELPER}" ${{ inputs.extra-bazel-test-flags }} -- \
             ${{ inputs.bazel-test-target }}
+
+      - name: Upload test logs
+        if: inputs.bazel-test-target != '' && always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: qnx-testlogs
+          path: "*/testlogs/**"
+          if-no-files-found: ignore
