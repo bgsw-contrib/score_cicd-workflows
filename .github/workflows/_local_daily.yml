@@ -36,7 +36,7 @@ jobs:
       pages: write
       id-token: write
   renovate:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64, score-infra]
     permissions:
       contents: read
     steps:
