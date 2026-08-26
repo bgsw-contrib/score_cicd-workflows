@@ -1,0 +1,19 @@
+name: Self-hosted Runner Smoke Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: [self-hosted, Linux, X64, score-infra]
+    steps:
+      - name: Show runner info
+        run: |
+          echo "Runner name: $RUNNER_NAME"
+          echo "Runner OS: $RUNNER_OS"
+          echo "Runner arch: $RUNNER_ARCH"
+          hostname
+          uname -a
+
+      - name: Simple check
+        run: echo "✅ Self-hosted runner is working"
