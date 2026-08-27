@@ -1,6 +1,7 @@
 name: Self-hosted Runner Smoke Test
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
