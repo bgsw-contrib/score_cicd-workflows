@@ -16,5 +16,6 @@ jobs:
           hostname
           uname -a
 
+
       - name: Simple check
         run: echo "✅ Self-hosted runner is working"
