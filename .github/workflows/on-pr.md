@@ -207,3 +207,22 @@ permissions:
 `on-pr` uses the standard S-CORE runner-label resolution:
 `runner-labels` input → `runner_labels_ghub24_standard_x64` → `REPO_RUNNER_LABELS` → `ubuntu-24.04`. See
 [Runner Selection Logic](../../README.md#️-runner-selection-logic) for details.
+
+## Checkout and results
+
+By default, the workflow checks the calling repository using the event revision
+selected by `actions/checkout`. Optional inputs select a different checkout:
+
+| Input        | Default             | Meaning                                  |
+| ------------ | ------------------- | ---------------------------------------- |
+| `repository` | Calling repository  | Repository to check, as `owner/name`      |
+| `ref`        | Checkout default    | Commit SHA, tag or branch to check       |
+
+When `repository` selects a different repository and `ref` is omitted,
+`actions/checkout` selects that repository's default branch. Permissions and
+credentials must allow access to the selected repository.
+
+The `check-results` output is a JSON object containing the checked-out `commit`
+and a `checks` map with `pre-commit`, `python-tests`, `format`, `copyright`,
+`require-lock`, `module-tidy` and `lockfile` step outcomes. A skipped check is
+reported as `skipped`. Failed checks still fail the workflow.
