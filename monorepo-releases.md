@@ -33,12 +33,16 @@ uv add 'monorepo-releases @ git+https://github.com/eclipse-score/cicd-workflows@
 ```
 
 Commit `pyproject.toml` and `uv.lock`. Copy
-[`.github/labeler.yml`](.github/labeler.yml) and adapt its `comp-*` labels to your
+[`.github/labeler.yml`](.github/labeler.yml) and adapt its labels to your
 components. The same mapping powers [automatic PR labels](.github/workflows/label_pr.yml).
-The release check uses only `comp-*` labels with a single `changed-files` /
-`any-glob-to-any-file` rule and plain file paths or `*` / `**` patterns; other labels
-are ignored. Component names omit the `comp-` prefix, so `comp-bazel` uses
-`bazel/v…` tags.
+Label names determine the release tag prefix. A final dot suffix of 1–3
+characters is removed: `bazel.yml` uses `bazel/v…` tags, while the PR label stays
+`bazel.yml`. Only the last suffix is removed; longer or empty suffixes stay intact.
+Names without a suffix are unchanged. Labels must resolve to distinct, nonempty
+release prefixes.
+Each entry must use a single `changed-files` / `any-glob-to-any-file` rule and
+plain file paths or `*` / `**` patterns. Unsupported conditions are rejected.
+Include only release components in this shared configuration.
 
 Run the same command from your checkout. For CI, copy
 [the workflow](.github/workflows/monorepo-releases.yml), keeping checkout's
